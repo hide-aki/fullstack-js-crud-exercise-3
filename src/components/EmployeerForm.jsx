@@ -18,7 +18,6 @@ class EmployeerForm extends Form {
     colors: ["#FF6600", "yellow", "green", "#333333", "red"],
     cityes: ["Toronto", "Brampton", "Bolton"],
     branchs: ["Abacus", "Pillsworth"],
-
     errors: {}
   };
 
@@ -87,7 +86,6 @@ class EmployeerForm extends Form {
 
   //Form submit
   async doSubmit() {
-    let id = this.props.match.params.id;
     let {
       name,
       code,
@@ -110,31 +108,20 @@ class EmployeerForm extends Form {
 
     //If ID, Update the exists emplyeer
     //Else, Save new employeer
-    if (id) {
-      await fetch(`http://localhost:8080/api/employees/${id}`, {
-        method: "put",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ user: item })
-      });
-    } else {
-      await fetch(`http://localhost:8080/api/employees/`, {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ user: item })
-      });
-    }
+
+    await fetch(`http://localhost:8080/api/employees/`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ user: item })
+    });
 
     this.props.history.push("/employees");
   }
 
   render() {
-    let id = this.props.match.params.id;
     return (
       <form onSubmit={this.handleSubmit}>
         {this.renderInput("name", "Name")}
@@ -144,7 +131,7 @@ class EmployeerForm extends Form {
         {this.renderSelect("city", "City", this.state.cityes)}
         {this.renderSelect("branch", "Branch", this.state.branchs)}
         {this.renderRadio("assigned", "Assigned", this.state.assigned)}
-        {this.renderButton("Save", "Update", id)}
+        {this.renderButton("Save")}
       </form>
     );
   }

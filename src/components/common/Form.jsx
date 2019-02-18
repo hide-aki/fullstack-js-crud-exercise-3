@@ -67,10 +67,10 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderButton(save, update, id) {
+  renderButton(save) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">
-        {id ? update : save}
+        {save}
       </button>
     );
   }
